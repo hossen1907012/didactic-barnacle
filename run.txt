@@ -1,0 +1,1 @@
+flex language.l && g++ lex.yy.c -o language.out && ./language.out

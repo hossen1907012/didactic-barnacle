@@ -1,3 +1,4 @@
+print("Hello World");
 string name = "Mahi";
 number abc = 194.45;
 "a" / 4
