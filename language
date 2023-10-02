@@ -1,0 +1,12 @@
+%%
+[A-Za-z]* { printf("Good"); }
+%%
+
+int yylex(){
+  return 1;
+}
+
+int main(){
+ yylex();
+  return 1;
+}
