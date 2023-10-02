@@ -1,0 +1,6 @@
+string name = "Mahi";
+number abc = 194.45;
+"a" / 4
+"imran" != "mahi"
+
+if ("a">"b") {string name = "Imran";}
