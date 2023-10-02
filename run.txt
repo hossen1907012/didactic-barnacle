@@ -1,1 +1,1 @@
-flex language.l && g++ lex.yy.c -o language.out && ./language.out
+flex language.l && g++ -std=c++17 lex.yy.c language.cpp -o language.out && ./language.out
