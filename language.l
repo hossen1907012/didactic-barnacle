@@ -3,6 +3,8 @@
     using namespace std;
 
     unordered_map<string, int> variable_map;
+    int token_count;
+    int line_count;
 %}
 
 LETTER [A-Za-z]
@@ -22,11 +24,13 @@ rel_expr ({literals}|{arth_expr})+[ ]*{REL_OPS}[ ]*({literals}|{arth_expr})+
 print_pattern print[\(]({literals}|{arth_expr})[\)][";"]
 STATEMENT {str_var_pattern}|{num_var_pattern}|{arth_expr}|{rel_expr}|{print_pattern}
 
-conditional_expr if[ ]*[\(][ ]*{rel_expr}[ ]*[\)][ ]*["{"]{STATEMENT}*["}"]
-
+if_block if[ ]*[\(][ ]*{rel_expr}[ ]*[\)][ ]*["{"]{STATEMENT}*["}"]
+else_block else[ ]*(["{"]{STATEMENT}["}"])?{if_block}?
+CONDITION {if_block}([ ]*{else_block})*
 
 %%
-{print_pattern} {cout << "Voila" << endl;}
+{CONDITION} {cout << "Condition" << endl;}
+{STATEMENT} {cout << "Voila" << endl;}
 %%
 
 
@@ -36,7 +40,7 @@ int yywrap()
 }
 int main()
 { 
-     yyin = fopen("playground.zm", "r");
+    yyin = fopen("playground.zm", "r");
     yylex();
     exit(0);
 }
