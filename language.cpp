@@ -22,6 +22,11 @@ void Language::process_variable_declaration(string line)
     std::vector<std::string> words = this->split_string(line); // words[0] => datatype, words[1] => var_name, words[3] => value.
     this->token_count += words.size() + 1;                      // extra 1 for ;
 
+    if(this->check_variable_exists(words[1])){
+        cout << "ERROR!!!" << "\tVariable with name " << words[1] << " already exists" << endl;
+        return;
+    }
+
     if (words.size() > 2)
     {
         if (words[0] == "number")

@@ -3,8 +3,10 @@ string name = "Imran";
 number abc = 194.45;
 "a" / 4
 "imran" != "name"
-
+7 + 5
+237473 + 273478
 if ( notIncVar > "b" ) { string name = "Imran"; } else{ number a = 5; }
 while ( 6 > abc ) { string name = "Imran"; }
 
 while ( 4 < 5 ) { if ( 2 - 3 ) { print ( "Working" ); } }
+string abc = "Somestring";

@@ -28,7 +28,7 @@ if_block if[ ]+[\(][ ]+{rel_expr}[ ]+[\)][ ]+["{"][ ]+{STATEMENT}*[ ]+["}"]
 else_block else[ ]+(["{"][ ]+{STATEMENT}*[ ]+["}"])?{if_block}?
 CONDITION {if_block}([ ]+{else_block})*
 
-while_loop while[ ]+[\(][ ]+{rel_expr}[ ]+[\)][ ]+["{"][ ]+{STATEMENT}*[ ]+["}"]
+while_loop while[ ]+[\(][ ]+{rel_expr}[ ]+[\)][ ]+["{"][ ]+({STATEMENT}*|{CONDITION})[ ]+["}"]
 
 %%
 {print_pattern} {
@@ -70,5 +70,7 @@ int main()
     language.view_all_variables();
     cout << "\nTotal number of lines: " << language.line_count << endl;
     cout << "\nTotal number of tokens: " << language.token_count << endl;
+
+    yyout=fopen("output.txt","w");
     exit(0);
 }
