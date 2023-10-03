@@ -1,7 +1,0 @@
-print ( "fsadf" );
-string name = "mahi";
-int abc = 194.45;
-"mahi" != "name"
-
-if ( a > b ) { string user = "Primary user"; }
-while ( 6 > abc ) { string defuser = "mahi"; }
