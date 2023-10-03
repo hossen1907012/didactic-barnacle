@@ -19,15 +19,17 @@ public:
     void process_variable_declaration(std::string);
     void view_all_variables();
     int check_variable_exists(string);
-    int process_expressions(string line);
+    void process_expressions(string line);
     int process_if_statement(string line);
     int process_while_loop(string line);
     int check_token_exists(string token_name);
+    void process_print_pattern(string line);
 
 private:
     vector<string> split_string(const string &input);
-    int variable_validity_check(string);
+    int literals_validity_check(string);
     void initialize_token_recognizer();
+    void writeTokenInfo(vector<string>);
 };
 
 #endif

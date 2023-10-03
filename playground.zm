@@ -1,8 +1,8 @@
-print("Hello World");
+print ( "Hello World" );
 string name = "Imran";
 number abc = 194.45;
 "a" / 4
 "imran" != "name"
 
-if ( "a" > "b" ) { string name = "Imran"; } else{ number a = 5; }
+if ( notIncVar > "b" ) { string name = "Imran"; } else{ number a = 5; }
 while ( 6 > abc ) { string name = "Imran"; }

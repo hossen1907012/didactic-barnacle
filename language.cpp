@@ -20,7 +20,7 @@ void Language::process_variable_declaration(string line)
 {
     line = line.substr(0, (line.length() - 1));                // eliminate `;` at the end.
     std::vector<std::string> words = this->split_string(line); // words[0] => datatype, words[1] => var_name, words[3] => value.
-    this->token_count = words.size() + 1;                      // extra 1 for ;
+    this->token_count += words.size() + 1;                      // extra 1 for ;
 
     if (words.size() > 2)
     {
@@ -54,53 +54,38 @@ void Language::process_variable_declaration(string line)
     }
 }
 
-int Language::process_expressions(string line)
+void Language::process_print_pattern(string line){
+    std::vector<std::string> tkns = this->split_string(line);
+    this->token_count += tkns.size() + 1;
+    writeTokenInfo(tkns);
+}
+
+void Language::process_expressions(string line)
 {
     std::vector<std::string> tkns = this->split_string(line);
-    this->token_count = tkns.size() + 1;
+    this->token_count += tkns.size() + 1;
 
-    for (int i = 0; i < tkns.size(); i++)
-    {
-        if (this->check_token_exists(tkns[i]))
-        {
-            cout << "token: " << tkns[i] << " :\t" << this->token_recognizer_map[tkns[i]] << endl;
-        }
-        else
-        {
-            cout << "token: " << tkns[i] << endl;
-        }
-    }
-    return 1;
+    writeTokenInfo(tkns);
 }
 
 int Language::process_if_statement(string line)
 {
     std::vector<std::string> tkns = this->split_string(line);
-    this->token_count = tkns.size() + 1;
+    this->token_count += tkns.size() + 1;
 
     string literal_1 = tkns[2];
     string literal_2 = tkns[4];
     string _oprtr = tkns[3];
 
-    int ltr1_valid = this->variable_validity_check(literal_1);
-    int ltr2_valid = this->variable_validity_check(literal_2);
+    int ltr1_valid = this->literals_validity_check(literal_1);
+    int ltr2_valid = this->literals_validity_check(literal_2);
 
     if (!ltr1_valid || !ltr2_valid)
     {
         return 0;
     }
 
-    for (int i = 0; i < tkns.size(); i++)
-    {
-        if (this->check_token_exists(tkns[i]))
-        {
-            cout << "token: " << tkns[i] << " :\t" << this->token_recognizer_map[tkns[i]] << endl;
-        }
-        else
-        {
-            cout << "token: " << tkns[i] << endl;
-        }
-    }
+    writeTokenInfo(tkns);
 
     return ltr1_valid && ltr2_valid;
 }
@@ -108,32 +93,20 @@ int Language::process_if_statement(string line)
 int Language::process_while_loop(string line)
 {
     std::vector<std::string> tkns = this->split_string(line);
-    this->token_count = tkns.size() + 1;
+    this->token_count += tkns.size() + 1;
 
     string literal_1 = tkns[2];
     string literal_2 = tkns[4];
     string _oprtr = tkns[3];
 
-    int ltr1_valid = this->variable_validity_check(literal_1);
-    int ltr2_valid = this->variable_validity_check(literal_2);
+    int ltr1_valid = this->literals_validity_check(literal_1);
+    int ltr2_valid = this->literals_validity_check(literal_2);
 
     if (!ltr1_valid || !ltr2_valid)
     {
         return 0;
     }
-
-    for (int i = 0; i < tkns.size(); i++)
-    {
-        if (this->check_token_exists(tkns[i]))
-        {
-            cout << "token: " << tkns[i] << " :\t" << this->token_recognizer_map[tkns[i]] << endl;
-        }
-        else
-        {
-            cout << "token: " << tkns[i] << endl;
-        }
-    }
-
+    writeTokenInfo(tkns);
     return ltr1_valid && ltr2_valid;
 }
 
@@ -144,9 +117,9 @@ int Language::process_while_loop(string line)
  */
 
 int Language::check_variable_exists(string var_name)
-{ // return 1 if variable found and 0 if variable not found.
+{
     auto it = this->number_variable_map.find(var_name);
-    return it != this->number_variable_map.end() ? 1 : 0;
+    return it != this->number_variable_map.end() ? 1 : 0; // return 1 if variable found and 0 if variable not found.
 }
 
 int Language::check_token_exists(string token_name)
@@ -182,7 +155,7 @@ vector<string> Language::split_string(const string &input)
     return words;
 }
 
-int Language::variable_validity_check(string variable_name)
+int Language::literals_validity_check(string variable_name)
 {
     if (variable_name[0] != '\"' || variable_name[variable_name.length() - 1] != '\"')
     {
@@ -196,6 +169,20 @@ int Language::variable_validity_check(string variable_name)
         }
     }
     return 1;
+}
+
+void Language::writeTokenInfo(vector<string> tkns){
+    for (int i = 0; i < tkns.size(); i++)
+    {
+        if (this->check_token_exists(tkns[i]))
+        {
+            cout << "token: " << tkns[i] << " :\t" << this->token_recognizer_map[tkns[i]] << endl;
+        }
+        else
+        {
+            cout << "token: " << tkns[i] << endl;
+        }
+    }
 }
 
 void Language::initialize_token_recognizer()

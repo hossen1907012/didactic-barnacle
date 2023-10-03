@@ -20,7 +20,7 @@ str_var_pattern string[ ]+{var_name_pattern}([ ]+["="][ ]+["\""]({LETTER}|{DIGIT
 num_var_pattern number[ ]+{var_name_pattern}([ ]+["="][ ]+{DIGIT}*(["."]{DIGIT}*)?)?[";"]
 arth_expr ({literals}|{var_name_pattern})+[ ]+{ARTH_OPS}[ ]+({literals}|{var_name_pattern})+
 rel_expr ({literals}|{arth_expr}|{var_name_pattern})+[ ]+{REL_OPS}[ ]+({literals}|{arth_expr}|{var_name_pattern})+
-print_pattern print[\(]({literals}|{arth_expr})[\)][";"]
+print_pattern print[ ]+[\(][ ]+({literals}|{arth_expr})[ ]+[\)][";"]
 VARIABLE_DECLARATION {str_var_pattern}|{num_var_pattern}
 STATEMENT {str_var_pattern}|{num_var_pattern}|{arth_expr}|{rel_expr}|{print_pattern}
 
@@ -31,6 +31,10 @@ CONDITION {if_block}([ ]+{else_block})*
 while_loop while[ ]+[\(][ ]+{rel_expr}[ ]+[\)][ ]+["{"][ ]+{STATEMENT}*[ ]+["}"]
 
 %%
+{print_pattern} {
+    language.process_print_pattern(yytext);
+    language.line_count++;
+}
 {CONDITION} {
     language.process_if_statement(yytext);
     language.line_count++;
@@ -65,5 +69,6 @@ int main()
     cout << "\n\n\nAll the variables: \n";
     language.view_all_variables();
     cout << "\nTotal number of lines: " << language.line_count << endl;
+    cout << "\nTotal number of tokens: " << language.token_count << endl;
     exit(0);
 }
